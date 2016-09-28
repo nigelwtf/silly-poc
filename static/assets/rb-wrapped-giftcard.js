@@ -6,7 +6,7 @@
 
   function receiveMessage(event) {
     var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
-    if (origin !== "http://localhost:9091") return;
+    if (origin !== "http://192.81.219.169:9091") return;
 
     route(event.data);
   }
@@ -25,6 +25,6 @@
   window.addEventListener("message", receiveMessage, false);
 
   window.document.querySelector('iframe').onload = function () {
-    window.document.querySelector('iframe').contentWindow.postMessage('register', 'http://localhost:9091')
+    window.document.querySelector('iframe').contentWindow.postMessage('register', 'http://192.81.219.169:9091')
   }
 })(window);
