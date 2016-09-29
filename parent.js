@@ -35,7 +35,7 @@ module.exports = function () {
     res.send(template_index);
   });
 
-  app.get(express.static('static'))
+  app.use(express.static('static'))
 
   app.listen(80);
 };
