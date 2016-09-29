@@ -1,39 +1,41 @@
-const send = require('koa-send');
-const koa = require('koa');
+const express = require('express');
+
 const template_index = `
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Meow</title>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Meow</title>
 
-<style>
-iframe {
-  display: block;
-}
-</style>
-</head>
-<body>
-<input class="gift-card-input" />
+    <style>
+      iframe {
+        display: block;
+      }
+    </style>
+  </head>
 
-<h1>cool</h1>
-<iframe src="http://192.81.219.169:9091" frameborder="0"></iframe>
+  <body>
+    <input class="gift-card-input" />
 
-<span>meow</span>
-<span>meow2</span>
+    <small>This input should be populated 5 seconds after iframe load</small>
 
-<script src="/assets/rb-wrapped-giftcard.js"></script>
-</body>
+    <hr />
+
+    <iframe src="http://192.81.219.169:9091" frameborder="0"></iframe>
+
+    <script src="/assets/rb-wrapped-giftcard.js"></script>
+  </body>
 </html>
 `;
 
 module.exports = function () {
-  const app = koa();
+  const app = express();
 
-  app.use(function *(){
-    if ('/' == this.path) return this.body = template_index;
-    yield send(this, this.path, { root: __dirname + '/static' });
+  app.get('/', function (req, res) {
+    res.send(template_index);
   });
+
+  app.get(express.static('static'))
 
   app.listen(80);
 };

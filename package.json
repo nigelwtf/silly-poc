@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "cuid": "^1.3.8",
+    "express": "^4.14.0",
     "nodemon": "^1.10.2"
   }
 }

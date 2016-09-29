@@ -1,4 +1,4 @@
-const koa = require('koa');
+const express = require('express');
 
 const template_iframe = `
   <html>
@@ -7,21 +7,19 @@ const template_iframe = `
     </head>
 
     <body>
-      <div>
-        <input type="number" />
-      </div>
+      <p>Iframe content goes here</p>
 
       <script>
         var eventSource = null;
         var eventOrigin = null;
 
-        console.log('wow');
+        console.log('iframe js has booted');
 
         function receiveMessage(event) {
           var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
           if (origin !== "http://192.81.219.169") return;
 
-          console.log('iframe holy hell')
+          console.log('iframe has recieved message from parent window');
 
           eventSource = event.source;
           eventOrigin = event.origin;
@@ -45,10 +43,10 @@ const template_iframe = `
 
 
 module.exports = function () {
-  var app = koa();
+  var app = express();
 
-  app.use(function *() {
-    this.body = template_iframe;
+  app.get('/',  function (req, res) {
+    res.send(template_iframe);
   });
 
   app.listen(9091);
